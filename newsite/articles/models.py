@@ -7,7 +7,6 @@ from django.utils.text import slugify
 class Article(models.Model):
 
     VISIBILITY = (
-        ("hidden", "Hidden"),
         ("private", "Private"),
         ("public", "Public")
     )
@@ -22,6 +21,7 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     visibility = models.CharField(
         max_length=15, choices=VISIBILITY, default="public")
+    hidden = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.id:

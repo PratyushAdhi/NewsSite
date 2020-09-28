@@ -6,20 +6,27 @@ class ArticleSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     lookup_field = "slug"
 
+    extra_kwargs = {
+        "slug": {
+            "read_only": True
+        }
+    }
+
     class Meta:
         model = Article
-        fields = "__all__"
+        exclude = ("hidden", "id")
 
 
 class ArticleHideSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField()
+    lookup_field = "slug"
+
+    extra_kwargs = {
+        "slug": {
+            "read_only": True
+        }
+    }
+
     class Meta:
         model = Article
-        fields = ("body", "visibility", "author")
-        extra_kwargs = {
-            "body": {
-                "read_only": True
-            },
-            "author": {
-                "read_only": True
-            }
-        }
+        exclude = ("visibility", "id")

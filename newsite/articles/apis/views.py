@@ -9,16 +9,16 @@ from .permissions import IsAuthorOrModeratorOrReadOnly
 
 
 class ArticleListAPIView(ListAPIView):
-    permission_classes = (IsAuthorOrModeratorOrReadOnly)
+    permission_classes = (IsAuthorOrModeratorOrReadOnly,)
     queryset = Article.objects.filter(
-        visibility="public").order_by("-updated_at")
+        visibility="public", hidden=False).order_by("-updated_at")
     serializer_class = ArticleSerializer
 
 
 class ArticleDetailAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = Article.objects.filter(visibility="public")
+    queryset = Article.objects.filter(visibility="public", hidden=False)
     lookup_field = "slug"
-    permission_classes = (IsAuthorOrModeratorOrReadOnly)
+    permission_classes = (IsAuthorOrModeratorOrReadOnly,)
 
     def get_serializer_class(self):
         if self.request.user.is_moderator or self.request.is_admin:
