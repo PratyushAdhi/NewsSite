@@ -5,6 +5,13 @@ from django.utils.text import slugify
 
 
 class Article(models.Model):
+
+    VISIBILITY = (
+        ("hidden", "Hidden"),
+        ("private", "Private"),
+        ("public", "Public")
+    )
+
     media = models.FileField(upload_to="articles/", blank=True, null=True)
     title = models.CharField(max_length=50)
     body = models.TextField()
@@ -13,6 +20,8 @@ class Article(models.Model):
     slug = models.SlugField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    visibility = models.CharField(
+        max_length=15, choices=VISIBILITY, default="public")
 
     def save(self, *args, **kwargs):
         if not self.id:

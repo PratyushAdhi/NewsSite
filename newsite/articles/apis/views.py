@@ -4,15 +4,23 @@ from rest_framework.generics import (GenericAPIView,
                                      RetrieveUpdateDestroyAPIView)
 
 from ..models import Article
-from .serializers import ArticleSerializer
+from .serializers import ArticleSerializer, ArticleHideSerializer
+from .permissions import IsAuthorOrModeratorOrReadOnly
 
 
 class ArticleListAPIView(ListAPIView):
-    queryset = Article.objects.all().order_by("-updated_at")
+    permission_classes = (IsAuthorOrModeratorOrReadOnly)
+    queryset = Article.objects.filter(
+        visibility="public").order_by("-updated_at")
     serializer_class = ArticleSerializer
 
 
 class ArticleDetailAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
+    queryset = Article.objects.filter(visibility="public")
     lookup_field = "slug"
+    permission_classes = (IsAuthorOrModeratorOrReadOnly)
+
+    def get_serializer_class(self):
+        if self.request.user.is_moderator or self.request.is_admin:
+            return ArticleHideSerializer
+        return ArticleSerializer
