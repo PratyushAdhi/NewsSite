@@ -1,7 +1,8 @@
 from rest_framework import views
 from rest_framework.generics import (GenericAPIView,
                                      ListCreateAPIView, ListAPIView,
-                                     RetrieveUpdateDestroyAPIView)
+                                     RetrieveUpdateDestroyAPIView,
+                                     CreateAPIView)
 
 from ..models import Article
 from .serializers import ArticleSerializer, ArticleHideSerializer
@@ -24,3 +25,12 @@ class ArticleDetailAPIView(RetrieveUpdateDestroyAPIView):
         if self.request.user.is_moderator or self.request.is_admin:
             return ArticleHideSerializer
         return ArticleSerializer
+
+class ArticleCreateAPIView(CreateAPIView):
+    serializer_class = ArticleSerializer
+    def get_queryset(self):
+        return Article.objects.all()
+
+    def perform_create(self, serializer):
+        author = self.request.user
+        serializer.save(author=author)
