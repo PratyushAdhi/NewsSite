@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -91,9 +92,13 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     "NON_FIELD_ERRORS_KEY" : "error",
-    "DEFAULT_AUTHENTICATION_CLASSES":("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_AUTHENTICATION_CLASSES":("rest_framework_simplejwt.authentication.JWTAuthentication",)
 }
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(minutes=3600),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

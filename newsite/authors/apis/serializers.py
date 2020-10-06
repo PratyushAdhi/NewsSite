@@ -63,7 +63,6 @@ class LoginSerializer(serializers.ModelSerializer):
             "email": email,
             "password": password,
             "tokens": user.tokens()
-
         }
 
         return super().validate(attrs)
@@ -81,20 +80,23 @@ class SetNewPasswordSerializer(serializers.Serializer):
     token = serializers.CharField(write_only =True)
     uidb64 = serializers.CharField(max_length = 255, write_only =True)
 
-    fields = ("password", "token", "uidb64")
+    # fields = ("password", "token", "uidb64",)
 
     def validate(self, attrs):
         try:
             password = attrs.get("password", "")
             token = attrs.get("token", "")
             uidb64 = attrs.get("uidb64", "")
+            print(uidb64)
             id = force_str(urlsafe_base64_decode(uidb64))
+            print(id)
             user = Author.objects.get(id=id)
             if not PasswordResetTokenGenerator().check_token(user, token):
                 raise AuthenticationFailed("Invalid Reset Parameter", 401)
             user.set_password(password)
-
-        except:
+            user.save()
+            return user
+        except Exception:
             raise AuthenticationFailed("Invalid Reset Parameter", 401)
         return super().validate(attrs)
 

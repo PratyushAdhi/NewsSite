@@ -69,6 +69,6 @@ class Author(AbstractBaseUser):
     def tokens(self):
         refresh = RefreshToken.for_user(self)
         return {
-            'refresh': refresh,
-            'tokens': str(refresh.access_token)
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
         }
