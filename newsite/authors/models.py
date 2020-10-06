@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models.fields import EmailField
+from rest_framework_simplejwt.tokens import RefreshToken
 # Create your models here.
 
 
@@ -31,6 +32,7 @@ class AuthorManager(BaseUserManager):
         author.is_staff = True
         author.is_superuser = True
         author.is_moderator = True
+        author.is_verified = True
         author.save(using=self._db)
         return author
 
@@ -45,7 +47,8 @@ class Author(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     is_moderator = models.BooleanField(default=False)
     display_picture = models.ImageField(
         null=True, blank=True, upload_to="authors/")
@@ -62,3 +65,10 @@ class Author(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': refresh,
+            'tokens': str(refresh.access_token)
+        }
