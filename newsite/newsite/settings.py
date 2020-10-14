@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'authors',
     'articles',
     'comments',
+    'authentication',
 ]
 
 MIDDLEWARE = [

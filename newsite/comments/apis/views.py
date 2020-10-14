@@ -15,7 +15,7 @@ class CommentListCreateAPIView(ListCreateAPIView):
     def get_queryset(self):
         return Comments.objects.filter(article__slug=self.kwargs['slug'])
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer, **kwargs):
         author = self.request.user
         slug = self.kwargs['slug']
         article = get_object_or_404(Article, slug=slug)
@@ -29,14 +29,3 @@ class CommentDetailAPIView(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         Comments.objects.filter(article__slug=self.kwargs['slug'], id=self.kwargs["pk"])
 
-
-# class CommentCreateAPIView(CreateAPIView):
-    
-#     def get_queryset(self):
-#         return Comments.objects.all()
-
-#     def perform_create(self, serializer):
-#         author = self.request.user
-#         slug = self.kwargs['slug']
-#         article = get_object_or_404(Article, slug=slug)
-#         serializer.save(article=article, author=author)

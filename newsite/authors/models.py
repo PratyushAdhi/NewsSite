@@ -50,6 +50,7 @@ class Author(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     is_moderator = models.BooleanField(default=False)
+    followers = models.ManyToManyField("self", related_name="following", symmetrical=False)
     display_picture = models.ImageField(
         null=True, blank=True, upload_to="authors/")
     USERNAME_FIELD = "email"
@@ -72,3 +73,4 @@ class Author(AbstractBaseUser):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         }
+

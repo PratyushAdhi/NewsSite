@@ -23,6 +23,7 @@ urlpatterns = [
     path('comments/', include("comments.apis.urls")),
     path('articles/', include("articles.apis.urls")),
     path('authors/', include("authors.apis.urls")),
+    path('auth/', include("authentication.apis.urls")),
 ]
 
 
