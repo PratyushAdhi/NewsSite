@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 
+SECRET_KEY =  'tnf_-ea!5y6c%#qspl)93tl4g1b&cr-&g05(mnesx@_9l*7n9)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'articles',
     'comments',
     'authentication',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -87,13 +88,14 @@ WSGI_APPLICATION = 'newsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
 REST_FRAMEWORK = {
     "NON_FIELD_ERRORS_KEY" : "error",
-    "DEFAULT_AUTHENTICATION_CLASSES":("rest_framework_simplejwt.authentication.JWTAuthentication",)
+    "DEFAULT_AUTHENTICATION_CLASSES":("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
