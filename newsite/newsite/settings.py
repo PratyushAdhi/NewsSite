@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import datetime
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 
+SECRET_KEY =  config("SECRET_KEY",default='tnf_-ea!5y6c%#qspl)93tl4g1b&cr-&g05(mnesx@_9l*7n9)')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(config('DEBUG', default=0))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', config("VIRTUAL_HOST")]
+
 
 
 # Application definition
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'articles',
     'comments',
     'authentication',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -87,18 +90,19 @@ WSGI_APPLICATION = 'newsite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
 REST_FRAMEWORK = {
     "NON_FIELD_ERRORS_KEY" : "error",
-    "DEFAULT_AUTHENTICATION_CLASSES":("rest_framework_simplejwt.authentication.JWTAuthentication",)
+    "DEFAULT_AUTHENTICATION_CLASSES":("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(minutes=3600),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1)
+    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(days=9),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=17),
 }
 
 # Password validation
@@ -130,7 +134,7 @@ AUTHENTICATION_BACKENDS = (
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Calcutta'
 
 USE_I18N = True
 
