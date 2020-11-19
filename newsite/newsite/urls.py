@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('1024193015/admin/', admin.site.urls),
     path('comments/', include("comments.apis.urls")),
     path('articles/', include("articles.apis.urls")),
     path('authors/', include("authors.apis.urls")),

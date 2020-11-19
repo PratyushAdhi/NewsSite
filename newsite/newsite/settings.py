@@ -99,8 +99,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(minutes=3600),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1)
+    "ACCESS_TOKEN_LIFETIME" : datetime.timedelta(days=9),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=17),
 }
 
 # Password validation
