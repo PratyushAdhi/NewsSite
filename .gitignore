@@ -2,3 +2,4 @@
 /newsite/env/
 db.sqlite3
 .vscode/settings.json
+.env
