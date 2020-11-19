@@ -9,7 +9,7 @@ RequestPasswordResetEmailAPIView,LoginAPIView, PasswordResetNewPasswordAPIView,)
 
 urlpatterns = [
     path('register/',RegisterAPIView.as_view(), name="regsiter"),
-    path('email-verify/', VerifyEmail.as_view(), name="verify-email"),
+    # path('email-verify/', VerifyEmail.as_view(), name="verify-email"),
     path('login/',LoginAPIView.as_view(), name="login"),
     path('token/refresh/', TokenRefreshView.as_view(), name="token-refresh"),
     path('password-reset/<uidb64>/<token>/', PasswordTokenCheckAPIView.as_view(), name="password-reset"),

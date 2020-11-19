@@ -55,7 +55,7 @@ class LoginSerializer(serializers.ModelSerializer):
         return {
             "email": email,
             "password": password,
-            "tokens": user.tokens()
+            "access": user.tokens()
         }
 
         return super().validate(attrs)
