@@ -1,2 +1,4 @@
 /newsite/db.sqlite3/
 /newsite/env/
+db.sqlite3
+.vscode/settings.json

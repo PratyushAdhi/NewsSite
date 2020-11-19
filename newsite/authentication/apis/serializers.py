@@ -38,7 +38,7 @@ class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     password = serializers.CharField(max_length=50)
     username = serializers.CharField(max_length = 50, read_only=True)
-    tokens = serializers.CharField(max_length=255, read_only=True)
+    tokens = serializers.DictField(read_only=True)
 
 
     class Meta:
@@ -55,7 +55,7 @@ class LoginSerializer(serializers.ModelSerializer):
         return {
             "email": email,
             "password": password,
-            "access": user.tokens()
+            "tokens": user.tokens()
         }
 
         return super().validate(attrs)
